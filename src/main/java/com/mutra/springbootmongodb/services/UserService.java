@@ -13,25 +13,30 @@ import com.mutra.springbootmongodb.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class UserService {
-	
+
 	@Autowired
 	private UserRepository repository;
-	
-	public List<User> findAll(){
+
+	public List<User> findAll() {
 		List<User> users = repository.findAll();
 		return users;
 	}
-	
+
 	public User findById(String id) {
 		Optional<User> obj = repository.findById(id);
-		return obj.orElseThrow( () -> new ObjectNotFoundException("Object not found"));
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found"));
 	}
-	
+
 	public User insert(User obj) {
 		return repository.insert(obj);
 	}
-	
+
+	public void delete(String id) {
+		findById(id);
+		repository.deleteById(id);
+	}
+
 	public User fromDTO(UserDTO objDto) {
-		return new User(objDto.getId(),objDto.getName(),objDto.getEmail());
+		return new User(objDto.getId(), objDto.getName(), objDto.getEmail());
 	}
 }
