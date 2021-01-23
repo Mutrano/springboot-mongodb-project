@@ -1,5 +1,6 @@
 package com.mutra.springbootmongodb.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,5 +25,10 @@ public class PostService {
 	
 	public List<Post> findByTitle(String text) {
 		return repository.searchTitle(text);
+	}
+	
+	public List<Post> fullSearch(String text, LocalDate minDate, LocalDate maxDate){
+		maxDate = maxDate.plusDays(1);
+		return repository.fullSearch(text, minDate, maxDate);
 	}
 }
